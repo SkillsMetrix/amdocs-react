@@ -1,28 +1,56 @@
 import { Component } from "react";
+import { Header } from "./Header";
+import Footer from "./Footer";
 
-export default class Counter extends Component {
-  // init the state
-  state = {
-    counter: 0,
-    myname:'amar'
+export default class AddUser extends Component {
+  addUser = (e) => {
+    e.preventDefault();
+
+    const data = e.target.elements.uname.value;
+    this.props.au(data);
   };
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.addUser}>
+          <input type="text" name="uname" />
+          <button>add</button>
+        </form>
+      </div>
+    );
+  }
+}
 
-  inc = () => {
-    this.setState((prevState) => {
+
+
+
+import { Component } from "react";
+import { Header } from "./Header";
+import Footer from "./Footer";
+import Users from "./Users";
+import AddUser from "./AddUser";
+
+export default class MainApp extends Component {
+  state = {
+    userData: [],
+    headerData: "welcome to header",
+  };
+  addUser = (user) => {
+    this.setState((prevSate) => {
       return {
-        counter: prevState.counter + 1,
+        userData: prevSate.userData.concat(user),
       };
     });
-  };
-  dec = () => {
-    alert("dec called");
   };
 
   render() {
     return (
       <div>
-        <p>The count is : {this.state.counter}</p>
-        <button onClick={this.inc}>INC</button>
+        <Header hdata={this.state.headerData} />
+        <Users users={this.state.userData} />
+        <p> MainApp Declared</p>
+        <AddUser  au={this.addUser}/>
+        <Footer />
       </div>
     );
   }
