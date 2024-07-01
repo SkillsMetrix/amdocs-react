@@ -1,0 +1,54 @@
+NodeJS ver 18 and above
+
+VS code 
+
+
+-------------------ReactJS----------------
+
+Meta 
+
+SPA ->Single Page App
+
+components -> View
+
+Angular/React/Vue -> SPA and component centric app
+
+
+React -> Es6 / TS
+
+JS ---> ES6 
+
+ES6 -> Transpiler (Babel)
+
+bundling -> Webpack
+------------------------------------
+command to install React App
+---
+
+npm i -g create-react-app
+
+create-react-app my-app
+
+
+Types of components
+
+1) class Based
+2) Functional
+
+-------------------------------
+Data Sharing
+
+props and state
+
+props -> when child receives the data from its parent , it uses props (its readonly property)
+
+Events
+
+state -> its keep changing
+
+1) initialize the state with its default value
+2) render the state
+3) update the state
+4) rerender the state
+
+
