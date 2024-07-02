@@ -1,15 +1,18 @@
-componentDidMount() {
-        const json = localStorage.getItem('amdocs')
-        const userData = JSON.parse(json)
-        if (userData) {
-            this.setState(() => {
-                return {
-                    userData
-                }
-            })
-        }
+import { Component } from 'react'
+import axios from 'axios'
+const URL='https://jsonplaceholder.typicode.com/users'
+export default class RestApp extends Component{
+
+    componentDidMount(){
+        axios.get(URL)
+        .then((res)=> res.data)
+        .then((data)=>{
+            console.log(data);
+        })
     }
-      componentDidUpdate() {
-        const json = JSON.stringify(this.state.userData)
-        localStorage.setItem('amdocs', json)
+render(){
+        return(
+            <div></div>
+        )
     }
+}
