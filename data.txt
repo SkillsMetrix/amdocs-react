@@ -1,28 +1,27 @@
+import { useState } from 'react'
 
-import { useEffect, useState } from 'react'
-
-function Demo1() {
-    //init the state
-
-
-    //lifectylce 
-
-    const [count, setCount] = useState(10)
-    useEffect(() => {
-        console.log('called during mount');
-    }, [])
-    useEffect(() => {
-        console.log('called during update');
-    }, [count])
-    const inc = () => {
-        setCount(count + 1)
-    }
+function UserApp() {
+    const [users, setUsers] = useState([])
+    const [uname, setUname] = useState('')
+    console.log(uname);
     return (
         <div>
-            The Count is : {count}
-            <button onClick={inc}>INC</button>
-            <button onClick={() => setCount(count - 1)}>DEC</button>
+            <p>The Users List</p>
+            {users.map((data) => (
+                <div>
+                    <div>
+                        {data}
+                    </div>
+                    <hr />
+
+                </div>
+            ))}
+            <form>
+                <input type='text' value={uname} onChange={(e) => setUname(e.target.value)} />
+                <button className='btn btn-success'>Add User</button>
+            </form>
         </div>
     )
+
 }
-export default Demo1
+export default UserApp
