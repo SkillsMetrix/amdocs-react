@@ -1,18 +1,30 @@
 import { Component } from 'react'
 import axios from 'axios'
-const URL='https://jsonplaceholder.typicode.com/users'
-export default class RestApp extends Component{
+const URL = 'https://jsonplaceholder.typicode.com/users'
+export default class RestApp extends Component {
 
-    componentDidMount(){
-        axios.get(URL)
-        .then((res)=> res.data)
-        .then((data)=>{
-            console.log(data);
-        })
+    state = {
+        userData: []
     }
-render(){
-        return(
-            <div></div>
+
+    componentDidMount() {
+        axios.get(URL)
+            .then((res) => res.data)
+            .then((data) => {
+                this.setState({ userData: data })
+
+
+            })
+    }
+    render() {
+        return (
+            <div>
+                {this.state.userData.map((udata) => (
+                    <div>
+                        {udata.name} -- {udata.email}
+                    </div>
+                ))}
+            </div>
         )
     }
 }
