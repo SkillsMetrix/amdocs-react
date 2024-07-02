@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import axios from 'axios'
+import RestData from './RestData'
 const URL = 'https://jsonplaceholder.typicode.com/users'
 export default class RestApp extends Component {
 
@@ -19,7 +20,23 @@ export default class RestApp extends Component {
     render() {
         return (
             <div>
-                {this.state.userData.map((udata) => (
+                <RestData rdata={this.state.userData} />
+            </div>
+        )
+    }
+}
+
+
+
+import { Component } from "react";
+
+
+export default class RestData extends Component{
+
+    render(){
+        return(
+            <div>
+                {this.props.rdata.map((udata) => (
                     <div>
                         {udata.name} -- {udata.email}
                     </div>
