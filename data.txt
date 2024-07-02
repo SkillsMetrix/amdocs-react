@@ -3,20 +3,27 @@ import { useState } from 'react'
 function UserApp() {
     const [users, setUsers] = useState([])
     const [uname, setUname] = useState('')
-    console.log(uname);
+
+    const addUser = (e) => {
+        e.preventDefault()
+        setUsers([
+            ...users, { uname }
+        ])
+        setUname('')
+    }
     return (
         <div>
             <p>The Users List</p>
             {users.map((data) => (
                 <div>
                     <div>
-                        {data}
+                        {data.uname}
                     </div>
                     <hr />
 
                 </div>
             ))}
-            <form>
+            <form onSubmit={addUser}>
                 <input type='text' value={uname} onChange={(e) => setUname(e.target.value)} />
                 <button className='btn btn-success'>Add User</button>
             </form>
