@@ -1,103 +1,15 @@
-import { Component } from "react";
-import { Header } from "./Header";
-import Footer from "./Footer";
-import Users from "./Users";
-import AddUser from "./AddUser";
-
-export default class MainApp extends Component {
-  state = {
-    userData: [],
-    headerData: "User CRUD Application",
-  };
-  addUser = (user) => {
-    this.setState((prevSate) => {
-      return {
-        userData: prevSate.userData.concat(user),
-      };
-    });
-  };
-deleteUsers=()=>{
-  this.setState(()=>{
-    return{
-      userData:[]
+componentDidMount() {
+        const json = localStorage.getItem('amdocs')
+        const userData = JSON.parse(json)
+        if (userData) {
+            this.setState(() => {
+                return {
+                    userData
+                }
+            })
+        }
     }
-  })
-}
-deleteUser=(user)=>{
-  this.setState((prevSate)=>{
-    return{
-      userData:prevSate.userData.filter((option)=> user !== option)
+      componentDidUpdate() {
+        const json = JSON.stringify(this.state.userData)
+        localStorage.setItem('amdocs', json)
     }
-  })
-}
-
-  render() {
-    return (
-      <div>
-        <Header hdata={this.state.headerData} 
-        du={this.deleteUsers}
-        hasData={this.state.userData.length > 0}
-        
-        />
-        <Users users={this.state.userData} 
-        du={this.deleteUser}
-        />
-         <AddUser  au={this.addUser}/>
-        <Footer />
-      </div>
-    );
-  }
-}
-
-
------------
-
-
-
-import  { Component } from 'react'
-import { Header } from './Header'
-import Footer from './Footer'
-import User from './User'
-
-export default class Users extends Component{
-
-    render(){
-
-     return(
-        <div>
-          {
-            this.props.users.map((data)=>   <User udata={data} deleteuser={this.props.du}/> )
-          }
-        
-           
-         
-        </div>
-     )
-    }
-}
-
-
-----------
-
-
-
-import  { Component } from 'react'
-import { Header } from './Header'
-import Footer from './Footer'
-
-export default class User extends Component{
-
-    render(){
-
-     return(
-        <div>
-            
-          <ul>
-            <li >{this.props.udata}</li>
-            <button onClick={()=> this.props.deleteuser(this.props.udata)}>Delete</button>
-          </ul>
-           
-        </div>
-     )
-    }
-}
