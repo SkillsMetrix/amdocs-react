@@ -1,47 +1,28 @@
-import { Component } from 'react'
-import axios from 'axios'
-import RestData from './RestData'
-const URL = 'https://jsonplaceholder.typicode.com/users'
-export default class RestApp extends Component {
 
-    state = {
-        userData: []
+import { useEffect, useState } from 'react'
+
+function Demo1() {
+    //init the state
+
+
+    //lifectylce 
+
+    const [count, setCount] = useState(10)
+    useEffect(() => {
+        console.log('called during mount');
+    }, [])
+    useEffect(() => {
+        console.log('called during update');
+    }, [count])
+    const inc = () => {
+        setCount(count + 1)
     }
-
-    componentDidMount() {
-        axios.get(URL)
-            .then((res) => res.data)
-            .then((data) => {
-                this.setState({ userData: data })
-
-
-            })
-    }
-    render() {
-        return (
-            <div>
-                <RestData rdata={this.state.userData} />
-            </div>
-        )
-    }
+    return (
+        <div>
+            The Count is : {count}
+            <button onClick={inc}>INC</button>
+            <button onClick={() => setCount(count - 1)}>DEC</button>
+        </div>
+    )
 }
-
-
-
-import { Component } from "react";
-
-
-export default class RestData extends Component{
-
-    render(){
-        return(
-            <div>
-                {this.props.rdata.map((udata) => (
-                    <div>
-                        {udata.name} -- {udata.email}
-                    </div>
-                ))}
-            </div>
-        )
-    }
-}
+export default Demo1
