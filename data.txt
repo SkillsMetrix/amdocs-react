@@ -1,39 +1,66 @@
 
-import { createContext, useContext, useState } from 'react'
 
-//init the context
-const appContext = createContext()
-const userData = { id: 101, name: 'user-1', email: 'user@mail.com', income: 3456 }
+import { createContext } from 'react'
 
-function ContextApp() {
-    const [emp, setEmp] = useState(userData)
-    return (
+export const MyContext = createContext('')
+
+
+
+
+import { useContext } from "react"
+import { MyContext } from "./MyContext"
+
+
+function MyComponent (){
+    const myContext= useContext(MyContext)
+
+    return(
         <div>
-            <appContext.Provider value={emp}>
-                <Employee />
-            </appContext.Provider>
+            My Comp Data :{myContext}
         </div>
     )
 }
+export default MyComponent
 
-function Employee() {
-    const empContext=useContext(appContext)
-    return (
+
+
+import MyComponent from "./MyComponent"
+
+
+
+function MainComp(){
+    
+    return(
         <div>
-            <p>UserName :{empContext.name}</p>
-            <p>email :{empContext.email}</p>
-            <hr/>
-            <Salary />
+            <MyComponent/>
         </div>
     )
 }
+export default MainComp
 
-function Salary() {
-    const salaryContext=useContext(appContext)
-    return (
-        <div>
-            Salary : {salaryContext.income}
-        </div>
-    )
+
+
+
+
+import logo from './logo.svg';
+import './App.css';
+import MainComp from './context/MainComp';
+import { useState } from 'react';
+import { MyContext } from './context/MyContext';
+import ContextApp from './hooksdemo/ContextApiDemo';
+ 
+const userData=[{name:'admin',email:'admin@mail.com'}]
+function App() {
+  const [user,setUser]=useState('admin')
+  return (
+    <div className="App">
+      <MyContext.Provider value={user}>
+      <MainComp/>
+      </MyContext.Provider>
+    <hr/>
+    
+    </div>
+  );
 }
-export default ContextApp
+
+export default App;
