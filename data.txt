@@ -1,66 +1,29 @@
+import { useEffect, useState } from 'react'
 
+function UserApp() {
+    const [users, setUsers] = useState([])
 
-import { createContext } from 'react'
-
-export const MyContext = createContext('')
-
-
-
-
-import { useContext } from "react"
-import { MyContext } from "./MyContext"
-
-
-function MyComponent (){
-    const myContext= useContext(MyContext)
-
-    return(
-        <div>
-            My Comp Data :{myContext}
-        </div>
+const handleChange=(e)=>{
+     setUsers({...users,[e.target.name]:e.target.value})
+}
+const addUser = (e) => {
+        e.preventDefault()
+        console.log(users);
+       
+    }
+    const deleteUser = (user) => {
+        setUsers(users.filter((us) => us.uname !== user))
+    }
+    return (
+       
+            <form onSubmit={addUser}>
+                <input placeholder='Enter Username' type='text' name='uname' onChange={handleChange} />
+                <input placeholder='Enter Email' type='email' name='email' onChange={handleChange} />
+           
+                <button className='btn btn-success'>Add User</button>
+            </form>
+         
     )
+
 }
-export default MyComponent
-
-
-
-import MyComponent from "./MyComponent"
-
-
-
-function MainComp(){
-    
-    return(
-        <div>
-            <MyComponent/>
-        </div>
-    )
-}
-export default MainComp
-
-
-
-
-
-import logo from './logo.svg';
-import './App.css';
-import MainComp from './context/MainComp';
-import { useState } from 'react';
-import { MyContext } from './context/MyContext';
-import ContextApp from './hooksdemo/ContextApiDemo';
- 
-const userData=[{name:'admin',email:'admin@mail.com'}]
-function App() {
-  const [user,setUser]=useState('admin')
-  return (
-    <div className="App">
-      <MyContext.Provider value={user}>
-      <MainComp/>
-      </MyContext.Provider>
-    <hr/>
-    
-    </div>
-  );
-}
-
-export default App;
+export default UserApp
