@@ -26,3 +26,64 @@ function NavBar(props) {
 }
 
 export default NavBar;
+
+
+
+-----
+
+
+import Login from "./components/Login";
+import Portfolio from "./components/Portfolio";
+import Register from "./components/Register";
+import UserDetails from "./components/UserDetails";
+
+
+export const routes=[
+    {path:'/login', element:<Login/>},
+    {path:'/register', element:<Register/>},
+    {path:'/userdetails', element:<UserDetails/>},
+    {path:'/portfolio', element:<Portfolio/>}
+]
+-----
+
+
+
+
+
+
+import React from 'react';
+import { useRoutes } from 'react-router-dom'
+import { routes } from '../routes';
+function LandingPage(props) {
+    const element= useRoutes(routes)
+    return (
+        <div>
+            
+            {element}
+        </div>
+    );
+}
+
+export default LandingPage;
+
+
+
+----
+
+
+import logo from './logo.svg';
+import './App.css';
+import LandingPage from './components/LandingPage';
+import NavBar from './components/NavBar';
+
+function App() {
+  return (
+    <div className="App">
+        <NavBar/>
+        <hr/>
+       <LandingPage/>
+    </div>
+  );
+}
+
+export default App;
