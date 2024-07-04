@@ -1,29 +1,28 @@
-import { useEffect, useState } from 'react'
 
-function UserApp() {
-    const [users, setUsers] = useState([])
 
-const handleChange=(e)=>{
-     setUsers({...users,[e.target.name]:e.target.value})
-}
-const addUser = (e) => {
-        e.preventDefault()
-        console.log(users);
-       
-    }
-    const deleteUser = (user) => {
-        setUsers(users.filter((us) => us.uname !== user))
-    }
+import React from 'react';
+import { Link } from 'react-router-dom'
+
+function NavBar(props) {
     return (
-       
-            <form onSubmit={addUser}>
-                <input placeholder='Enter Username' type='text' name='uname' onChange={handleChange} />
-                <input placeholder='Enter Email' type='email' name='email' onChange={handleChange} />
-           
-                <button className='btn btn-success'>Add User</button>
-            </form>
-         
-    )
+        <div className='container'>
+            <ul className='nav'>
+                <li className='nav-item'>
+                    <a className='nav-link' href='#'><Link to="/login">Login</Link></a>
+                </li>
+                <li className='nav-item'>
+                    <a className='nav-link' href='#'><Link to="/register">Register</Link></a>
+                </li>
+                <li className='nav-item'>
+                    <a className='nav-link' href='#'><Link to="/portfolio">Portfolio</Link></a>
+                </li>
+                <li className='nav-item'>
+                    <a className='nav-link' href='#'><Link to="/Userdetails">UserDetails</Link></a>
+                </li>
+            </ul>
 
+        </div>
+    );
 }
-export default UserApp
+
+export default NavBar;
