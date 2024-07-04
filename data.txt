@@ -1,89 +1,49 @@
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+function Register() {
+    const [users, setUsers] = useState([])
+    const [errors, setErrors] = useState({})
+    const navigate = useNavigate()
+
+    const handleChange = (e) => {
+        setUsers({ ...users, [e.target.name]: e.target.value })
+    }
+    const addUser = (e) => {
+
+        e.preventDefault()
+        const formError = validateForm(users)
+        setErrors(formError)
+        if (Object.keys(formError).length === 0) {
+            localStorage.setItem('udata', JSON.stringify(users))
+            navigate("/login")
+        }
+
+    }
+
+    const validateForm = (data) => {
+        const errors = {}
+        if (!data.uname) {
+            errors.uname = 'username is required'
+        }
+        return errors
+    }
 
 
-import React from 'react';
-import { Link } from 'react-router-dom'
-
-function NavBar(props) {
     return (
-        <div className='container'>
-            <ul className='nav'>
-                <li className='nav-item'>
-                    <a className='nav-link' href='#'><Link to="/login">Login</Link></a>
-                </li>
-                <li className='nav-item'>
-                    <a className='nav-link' href='#'><Link to="/register">Register</Link></a>
-                </li>
-                <li className='nav-item'>
-                    <a className='nav-link' href='#'><Link to="/portfolio">Portfolio</Link></a>
-                </li>
-                <li className='nav-item'>
-                    <a className='nav-link' href='#'><Link to="/Userdetails">UserDetails</Link></a>
-                </li>
-            </ul>
 
-        </div>
-    );
+        <form onSubmit={addUser}>
+            <input placeholder='Enter Username' type='text' name='uname' onChange={handleChange} />
+            {errors.uname &&
+                <span>{errors.uname}</span>
+            }
+            <input placeholder='Enter Password' type='password' name='password' onChange={handleChange} />
+            <input placeholder='Enter Email' type='email' name='email' onChange={handleChange} />
+
+            <button className='btn btn-success'>Register</button>
+        </form>
+
+    )
+
 }
-
-export default NavBar;
-
-
-
------
-
-
-import Login from "./components/Login";
-import Portfolio from "./components/Portfolio";
-import Register from "./components/Register";
-import UserDetails from "./components/UserDetails";
-
-
-export const routes=[
-    {path:'/login', element:<Login/>},
-    {path:'/register', element:<Register/>},
-    {path:'/userdetails', element:<UserDetails/>},
-    {path:'/portfolio', element:<Portfolio/>}
-]
------
-
-
-
-
-
-
-import React from 'react';
-import { useRoutes } from 'react-router-dom'
-import { routes } from '../routes';
-function LandingPage(props) {
-    const element= useRoutes(routes)
-    return (
-        <div>
-            
-            {element}
-        </div>
-    );
-}
-
-export default LandingPage;
-
-
-
-----
-
-
-import logo from './logo.svg';
-import './App.css';
-import LandingPage from './components/LandingPage';
-import NavBar from './components/NavBar';
-
-function App() {
-  return (
-    <div className="App">
-        <NavBar/>
-        <hr/>
-       <LandingPage/>
-    </div>
-  );
-}
-
-export default App;
+export default Register
