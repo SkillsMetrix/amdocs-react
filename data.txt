@@ -1,83 +1,106 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-import { login, logout } from '../../redux/actions/authActions';
-function AuthApp(props) {
-
-    const userAuth = useSelector(state => state.auth)
-    const dispatch = useDispatch()
-    return (
-        <div>
-            <p>Access only to Authorize users</p>
-            <br />
-            <button onClick={() => dispatch(login())}>login</button>
-            <button onClick={() => dispatch(logout())}>logout</button>
-
-            <hr />
-
-
-            {userAuth ? (
-                <div>
-                    <p>Congratulation....! you got 50% discount , use coupon UU90YTU </p>
-                </div>
-            ) : (
-                <p>Please login to check the offer</p>
-            )}
-        </div>
-    );
-}
-
-export default AuthApp;
-
-
-
------
-
-
-
-
-
-export const login=()=>{
-    return {
-        type :"LOG_IN"
+import { createSlice } from '@reduxjs/toolkit'
+export const counterSlice = createSlice({
+    name: 'counter',
+    initialState: {
+        counter: 10
+    },
+    reducers: {
+        increment: (state) => {
+            state.counter += 1
+        },
+        decrement: (state) => {
+            state.counter -= 1
+        }
     }
-}
-export const logout=()=>{
-    return {
-        type :"LOG_OUT"
-    }
-}
 
-
+})
+export const {increment,decrement}= counterSlice.actions
+export default counterSlice.reducer
 
 ----
 
 
 
-const authReducer = (state = false, action) => {
-    switch (action.type) {
-        case "LOG_IN":
-            return true
-        case "LOG_OUT":
-            return false
-        default:
-            return state
-    }
-}
-export default authReducer
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from './reducers/counterSlice'
 
+export default configureStore({
+    reducer:{
+        appCounter: counterReducer
+    }
+})
+
+------
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import {Provider} from 'react-redux'
+import store from './redux/store';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+ 
+reportWebVitals();
+---
+
+
+
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+function CounterState(props) {
+    const appCount= useSelector(state => state.appCounter.counter)
+    return (
+        <div>
+               <p>The count is : {appCount}</p>
+        </div>
+    );
+}
+
+export default CounterState;
 
 
 ---
 
 
 
-import { combineReducers } from 'redux'
-import counterReducer from './counterReducer'
-import authReducer from './authReducer'
 
-const rootReducer = combineReducers({
-    mycounter: counterReducer,
-    auth:authReducer
-    
-})
-export default rootReducer
+import React from 'react';
+import { useDispatch } from 'react-redux'
+import { increment } from '../../redux/reducers/counterSlice';
+ function CounterAction(props) {
+    const dispatch= useDispatch()
+    return (
+        <div>
+    <button onClick={()=> dispatch(increment())}>INC</button>
+        </div>
+    );
+}
+
+export default CounterAction;
+
+---
+
+
+
+
+import React from 'react';
+import CounterState from './CounterState';
+import CounterAction from './CounterAction';
+function CounterApp(props) {
+return (
+    <div className="App">
+      <CounterState />
+      <hr />
+      <CounterAction />
+    </div>
+  );
+}
+
+export default CounterApp;
