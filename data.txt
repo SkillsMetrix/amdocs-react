@@ -25,7 +25,7 @@ describe("Test the Login Component", () => {
         const email = screen.getByPlaceholderText("Enter email");
         const password = screen.getByPlaceholderText("Password");
         const buttonList = await screen.findAllByRole("button");
-         userEvent.type(email, "amar");
+         userEvent.type(email, "amarcom");
         userEvent.type(password, "123456");
         userEvent.click(buttonList[0])
         const error= screen.getByText("Email is not valid")
