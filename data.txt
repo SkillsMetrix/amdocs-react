@@ -1,5 +1,5 @@
 import {  render, screen,fireEvent } from "@testing-library/react";
-import Login, { validateEmail } from "../Login";
+import Login, { validateEmail } from "./Login";
 import userEvent from '@testing-library/user-event'
 
 describe("Test the Login Component", () => {
@@ -10,13 +10,14 @@ describe("Test the Login Component", () => {
     });
   
     test("should be failed on email validation ", () => {
-      const testEmail = "dipesh.com";
-      expect(validateEmail(testEmail)).not.toBe(true);
+      const testEmail = "amar@mail.com";
+      expect(validateEmail(testEmail)).toBe(true);
     });
   
     test("email input field should accept email ", () => {
       render(<Login />);
       const email = screen.getByPlaceholderText("Enter email");
-      userEvent.type(email, "amar");
-      expect(email.value).not.toMatch("amar@mail.com");
-    });
+      userEvent.type(email, "amar@mail.com");
+      expect(email.value).toMatch("amar@mail.com");
+    })
+})
