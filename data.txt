@@ -20,4 +20,15 @@ describe("Test the Login Component", () => {
       userEvent.type(email, "amar@mail.com");
       expect(email.value).toMatch("amar@mail.com");
     })
+  test("should display alert if Error", async() => {
+        render(<Login />);
+        const email = screen.getByPlaceholderText("Enter email");
+        const password = screen.getByPlaceholderText("Password");
+        const buttonList = await screen.findAllByRole("button");
+         userEvent.type(email, "amar");
+        userEvent.type(password, "123456");
+        userEvent.click(buttonList[0])
+        const error= screen.getByText("Email is not valid")
+        expect(error).toBeInTheDocument();
+      });
 })
