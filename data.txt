@@ -1,68 +1,35 @@
-import apiCalls from "../../apis/apiCalls"
-import { ActionTypes } from "../constants/action-types"
+import React from 'react';
 
-export const setProduct=(products)=>{
-    return {
-        type:ActionTypes.SET_PRODUCT,
-        payload:products
-    }
-}
-
-export const fetchProducts=()=>async(dispatch)=>{
-    const response= await apiCalls.get('/products')
-    dispatch({type:ActionTypes.FETCH_PRODUCTS,payload:response.data})
-}
-
-
-export const selectedProduct=(product)=>{
-    return {
-        type:ActionTypes.SELECTED_PRODUCT,
-        payload:product
-    }
-}
-
-----
-
-import {createStore,applyMiddleware,compose} from 'redux'
-import rootReducer from './reducers'
-import {thunk} from 'redux-thunk'
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store= createStore(rootReducer,composeEnhancers(applyMiddleware(thunk)))
-
-
-export default store
------
-
-
-
-import axios from 'axios'
-
-export default axios.create({
-    baseURL:'https://fakestoreapi.com/'
-})
-
-----
-
-import React, { useEffect } from 'react';
-import {useDispatch, useSelector} from 'react-redux'
-import axios from 'axios'
-import ProductComponent from './ProductComponent';
-import { fetchProducts, setProduct } from '../redux/actions/productAction';
-const URL='https://fakestoreapi.com/products'
-function ProductListing(props) {
-    const products= useSelector(state=> state)
-    const dispatch= useDispatch()
-  
-    useEffect(()=>{
-        dispatch(fetchProducts())
-    },[])
-    console.log(products);
+function ErrorHandle({error}){
     return (
-        <div className='ui grid container'>
-       <ProductComponent/>
+        <div>
+            <p>An Error Occured</p>
+            <pre>{error.message}</pre>
+        </div>
+    )
+}
+function City({name}){
+    try{
+    return <div>Welcome, {name.toUpperCase()}</div>
+    }catch(error){
+        return <ErrorHandle error={error}/>
+    }
+}
+
+function Country({country}){
+    try{
+    return <div>Welcome, {country.toLowerCase()}</div>
+    }catch(error){
+        return <ErrorHandle error={error}/>
+    }
+}
+function ErrorHandler(props) {
+    return (
+        <div>
+            <City  />
+            <Country />
         </div>
     );
 }
 
-export default ProductListing;
+export default ErrorHandler;
